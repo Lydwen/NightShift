@@ -12,13 +12,17 @@ namespace dallagnol.tom.nightshift
         [SerializeField]
         private Transform _transformToMove;
 
-        // Update is called once per frame
-        void Update()
+        /// <summary>
+        ///     Update the position of the object
+        ///     according to the inputs
+        /// </summary>
+        public void UpdateMovement(Vector3 currentLookPointForward, Vector3 currentLookPointRight)
         {
             Vector3 movementToApply = Vector3.zero;
-            movementToApply += ApplyMovement(InputHelper.HORIZONTAL_AXIS, _transformToMove.right);
-            movementToApply += ApplyMovement(InputHelper.VERTICAL_AXIS, _transformToMove.forward);
-
+            movementToApply += ApplyMovement(InputHelper.HORIZONTAL_AXIS, currentLookPointRight);
+            movementToApply += ApplyMovement(InputHelper.VERTICAL_AXIS, currentLookPointForward);
+            //we don't want the character to move up
+            movementToApply.y = 0;
             _transformToMove.Translate(movementToApply, Space.Self);
         }
 
